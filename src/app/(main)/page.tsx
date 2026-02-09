@@ -1,20 +1,35 @@
-import { auth } from "@/lib/auth";
+import { getHomepageData } from "@/lib/queries/browse";
+import { VideoGrid } from "@/components/video/VideoGrid";
+import { SectionHeader } from "@/components/browse/SectionHeader";
 
 export default async function HomePage() {
-  const session = await auth();
+  const { trending, latest, categorySections } = await getHomepageData();
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-3xl font-bold text-zinc-50">Video Platform</h1>
-      {session ? (
-        <p className="text-zinc-400">
-          Welcome back, {session.user.name}! Your role: {session.user.role}
-        </p>
-      ) : (
-        <p className="text-zinc-400">
-          Browse and discover videos. Sign in to upload your own.
-        </p>
-      )}
+    <div className="space-y-10">
+      {/* Trending */}
+      <section className="space-y-4">
+        <SectionHeader title="Trending" href="/browse?sort=popular" />
+        <VideoGrid videos={trending} emptyMessage="No trending videos yet" />
+      </section>
+
+      {/* Latest */}
+      <section className="space-y-4">
+        <SectionHeader title="Latest" href="/browse?sort=latest" />
+        <VideoGrid videos={latest} emptyMessage="No videos yet" />
+      </section>
+
+      {/* Category Sections */}
+      {categorySections.map(({ category, videos }) => (
+        <section key={category.id} className="space-y-4">
+          <SectionHeader
+            title={category.name}
+            href={`/category/${category.slug}`}
+            linkText="See all"
+          />
+          <VideoGrid videos={videos} />
+        </section>
+      ))}
     </div>
   );
 }

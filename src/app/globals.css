@@ -124,3 +124,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide scrollbar for category pills */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

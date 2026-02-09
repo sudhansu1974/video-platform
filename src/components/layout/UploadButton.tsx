@@ -14,10 +14,10 @@ export function UploadButton() {
   if (!CREATOR_ROLES.includes(user.role)) return null;
 
   return (
-    <Button variant="ghost" size="sm" asChild>
+    <Button variant="ghost" size="icon" className="sm:w-auto sm:px-3" asChild>
       <Link href="/upload" className="flex items-center gap-2">
         <Upload className="h-4 w-4" />
-        Upload
+        <span className="hidden sm:inline text-sm">Upload</span>
       </Link>
     </Button>
   );
