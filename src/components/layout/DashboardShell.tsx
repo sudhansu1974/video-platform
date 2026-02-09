@@ -8,6 +8,7 @@ import { DashboardHeader } from "@/components/layout/DashboardHeader";
 interface DashboardShellProps {
   user: {
     name?: string | null;
+    username?: string;
     email?: string | null;
     avatarUrl?: string | null;
     role?: string;

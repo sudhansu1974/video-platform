@@ -16,6 +16,8 @@ const CONTENT_TYPES: Record<string, string> = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
 };
 
 export async function GET(
@@ -55,8 +57,8 @@ export async function GET(
       "Content-Length": String(fileBuffer.length),
     };
 
-    // Cache processed files and thumbnails (1 hour), not raw files
-    if (resolved.includes("processed") || resolved.includes("thumbnails")) {
+    // Cache processed files, thumbnails, avatars, banners (1 hour), not raw files
+    if (resolved.includes("processed") || resolved.includes("thumbnails") || resolved.includes("avatars") || resolved.includes("banners")) {
       headers["Cache-Control"] = "public, max-age=3600";
     }
 

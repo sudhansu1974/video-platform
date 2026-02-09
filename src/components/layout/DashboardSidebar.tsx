@@ -8,6 +8,7 @@ import {
   Upload,
   BarChart3,
   Settings,
+  User,
   PanelLeftClose,
   PanelLeftOpen,
   X,
@@ -20,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 interface DashboardSidebarProps {
   user: {
     name?: string | null;
+    username?: string;
     email?: string | null;
     avatarUrl?: string | null;
     role?: string;
@@ -30,36 +32,48 @@ interface DashboardSidebarProps {
   onMobileClose: () => void;
 }
 
-const navItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    exact: true,
-  },
-  {
-    label: "My Videos",
-    href: "/dashboard/videos",
-    icon: Video,
-  },
-  {
-    label: "Upload",
-    href: "/upload",
-    icon: Upload,
-  },
-  {
-    label: "Analytics",
-    href: "/dashboard/analytics",
-    icon: BarChart3,
-    disabled: true,
-    badge: "Soon",
-  },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-];
+function getNavItems(username?: string) {
+  return [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: LayoutDashboard,
+      exact: true,
+    },
+    {
+      label: "My Videos",
+      href: "/dashboard/videos",
+      icon: Video,
+    },
+    {
+      label: "Upload",
+      href: "/upload",
+      icon: Upload,
+    },
+    ...(username
+      ? [
+          {
+            label: "My Channel",
+            href: `/channel/${username}`,
+            icon: User,
+            external: true,
+          },
+        ]
+      : []),
+    {
+      label: "Analytics",
+      href: "/dashboard/analytics",
+      icon: BarChart3,
+      disabled: true,
+      badge: "Soon",
+    },
+    {
+      label: "Settings",
+      href: "/settings",
+      icon: Settings,
+    },
+  ];
+}
 
 export function DashboardSidebar({
   user,
@@ -69,6 +83,7 @@ export function DashboardSidebar({
   onMobileClose,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const navItems = getNavItems(user.username);
 
   const initials = user.name
     ? user.name

@@ -78,7 +78,10 @@ model User {
   name          String
   username      String    @unique
   avatarUrl     String?
+  bannerUrl     String?
   bio           String?   @db.Text
+  websiteUrl    String?
+  location      String?
   role          UserRole  @default(VIEWER)
   emailVerified DateTime?
   createdAt     DateTime  @default(now())
