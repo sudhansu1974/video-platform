@@ -30,7 +30,9 @@ export function MobileMenu({ categories }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();

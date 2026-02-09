@@ -72,7 +72,7 @@ export function truncateWithContext(
   // Center the window around the first match
   const halfWindow = Math.floor(maxLength / 2);
   let start = Math.max(0, firstIndex - halfWindow);
-  let end = Math.min(text.length, start + maxLength);
+  const end = Math.min(text.length, start + maxLength);
 
   // Adjust start if end is at the boundary
   if (end === text.length) {
