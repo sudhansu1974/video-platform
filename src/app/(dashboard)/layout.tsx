@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { Header } from "@/components/layout/Header";
+import { DashboardShell } from "@/components/layout/DashboardShell";
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function DashboardLayout({
   children,
@@ -18,11 +19,18 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
-      <Header />
-      <main className="container mx-auto max-w-screen-2xl px-4 py-8">
+    <>
+      <DashboardShell
+        user={{
+          name: session.user.name,
+          email: session.user.email,
+          avatarUrl: session.user.avatarUrl,
+          role: session.user.role,
+        }}
+      >
         {children}
-      </main>
-    </div>
+      </DashboardShell>
+      <Toaster />
+    </>
   );
 }
