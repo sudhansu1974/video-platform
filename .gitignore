@@ -44,5 +44,9 @@ next-env.d.ts
 # prisma
 /src/generated/prisma
 
+# uploads (local storage for MVP)
+/uploads/*
+!/uploads/.gitkeep
+
 # claude code
 .claude/settings.local.json

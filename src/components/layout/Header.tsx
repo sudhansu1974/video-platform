@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { UserMenu } from "@/components/layout/UserMenu";
+import { UploadButton } from "@/components/layout/UploadButton";
 
 export function Header() {
   return (
@@ -8,7 +9,10 @@ export function Header() {
         <Link href="/" className="text-xl font-bold text-zinc-50">
           VideoPlatform
         </Link>
-        <UserMenu />
+        <div className="flex items-center gap-3">
+          <UploadButton />
+          <UserMenu />
+        </div>
       </div>
     </header>
   );
