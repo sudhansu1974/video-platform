@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Home, Compass } from "lucide-react";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { UploadButton } from "@/components/layout/UploadButton";
-import { SearchBar } from "@/components/layout/SearchBar";
+import { SearchInput } from "@/components/search/SearchInput";
+import { MobileSearchButton } from "@/components/search/MobileSearchButton";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { CategoriesDropdown } from "@/components/layout/CategoriesDropdown";
 
@@ -50,7 +51,8 @@ export function Header({ categories = [] }: HeaderProps) {
 
         {/* Right: Search + Upload + User */}
         <div className="flex items-center gap-1.5 sm:gap-3">
-          <SearchBar />
+          <MobileSearchButton />
+          <SearchInput variant="header" className="hidden sm:block" />
           <UploadButton />
           <UserMenu />
         </div>
