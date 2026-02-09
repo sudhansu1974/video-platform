@@ -11,6 +11,8 @@ const CONTENT_TYPES: Record<string, string> = {
   ".webm": "video/webm",
   ".mov": "video/quicktime",
   ".avi": "video/x-msvideo",
+  ".m3u8": "application/vnd.apple.mpegurl",
+  ".ts": "video/mp2t",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",

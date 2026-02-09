@@ -131,7 +131,7 @@ export async function processVideo(
     await prisma.video.update({
       where: { id: videoId },
       data: {
-        fileUrl: processedPath,
+        fileUrl: getPublicUrl(processedPath),
         thumbnailUrl: getPublicUrl(thumbnailPath),
         duration,
         status: "PUBLISHED",
