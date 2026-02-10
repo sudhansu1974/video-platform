@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -16,8 +18,8 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   const tag = await getTagBySlug(slug);
   if (!tag) return { title: "Tag Not Found" };
   return {
-    title: `#${tag.name} Videos | VideoPlatform`,
-    description: `Browse videos tagged with #${tag.name} on VideoPlatform`,
+    title: `#${tag.name} Videos | VideoHub`,
+    description: `Browse videos tagged with #${tag.name} on VideoHub`,
   };
 }
 

@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -16,8 +18,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const category = await getCategoryBySlug(slug);
   if (!category) return { title: "Category Not Found" };
   return {
-    title: `${category.name} Videos | VideoPlatform`,
-    description: category.description ?? `Browse ${category.name} videos on VideoPlatform`,
+    title: `${category.name} Videos | VideoHub`,
+    description: category.description ?? `Browse ${category.name} videos on VideoHub`,
   };
 }
 

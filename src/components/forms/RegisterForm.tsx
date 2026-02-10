@@ -71,7 +71,7 @@ export function RegisterForm() {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-        <CardDescription>Get started with Video Platform</CardDescription>
+        <CardDescription>Get started with VideoHub</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

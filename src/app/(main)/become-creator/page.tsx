@@ -4,9 +4,9 @@ import { Upload, Users, Video, Building2, Sparkles, ArrowRight } from "lucide-re
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Start Creating — Video Platform",
+  title: "Start Creating — VideoHub",
   description:
-    "Learn about Creator and Studio accounts on Video Platform. Upload videos, build your channel, and reach viewers.",
+    "Learn about Creator and Studio accounts on VideoHub. Upload videos, build your channel, and reach viewers.",
 };
 
 export default function BecomeCreatorPage() {
@@ -15,7 +15,7 @@ export default function BecomeCreatorPage() {
       <div className="text-center">
         <Sparkles className="mx-auto mb-4 h-12 w-12 text-blue-400" />
         <h1 className="text-3xl font-bold text-zinc-50">
-          Start Creating on Video Platform
+          Start Creating on VideoHub
         </h1>
         <p className="mt-3 text-lg text-zinc-400">
           Share your videos with viewers across the platform.

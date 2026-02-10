@@ -25,8 +25,8 @@ export function Header({ categories = [] }: HeaderProps) {
         <div className="flex min-w-0 items-center gap-2 sm:gap-4">
           <MobileMenu categories={categories} />
           <Link href="/" className="flex-shrink-0 text-lg font-bold text-zinc-50 sm:text-xl">
-            <span className="sm:hidden">VP</span>
-            <span className="hidden sm:inline">VideoPlatform</span>
+            <span className="sm:hidden">VH</span>
+            <span className="hidden sm:inline">VideoHub</span>
           </Link>
           <nav className="hidden items-center gap-1 sm:flex">
             <Link

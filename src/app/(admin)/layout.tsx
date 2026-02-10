@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { AdminShell } from "@/components/layout/AdminShell";
-import { Toaster } from "@/components/ui/sonner";
 
 export default async function AdminLayout({
   children,
@@ -19,17 +18,14 @@ export default async function AdminLayout({
   }
 
   return (
-    <>
-      <AdminShell
-        user={{
-          name: session.user.name,
-          username: session.user.username,
-          avatarUrl: session.user.avatarUrl,
-        }}
-      >
-        {children}
-      </AdminShell>
-      <Toaster />
-    </>
+    <AdminShell
+      user={{
+        name: session.user.name,
+        username: session.user.username,
+        avatarUrl: session.user.avatarUrl,
+      }}
+    >
+      {children}
+    </AdminShell>
   );
 }

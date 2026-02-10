@@ -63,7 +63,7 @@ export function MobileMenu({ categories }: MobileMenuProps) {
       <SheetContent side="left" className="w-72 bg-zinc-900 p-0">
         <SheetHeader className="border-b border-zinc-800 p-4">
           <SheetTitle className="text-left text-lg font-bold text-zinc-50">
-            VideoPlatform
+            VideoHub
           </SheetTitle>
         </SheetHeader>
 

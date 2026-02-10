@@ -1,3 +1,5 @@
+export const revalidate = 30;
+
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getBrowseVideos } from "@/lib/queries/browse";
@@ -6,7 +8,7 @@ import { PaginationControls } from "@/components/browse/PaginationControls";
 import { BrowseSortTabs } from "@/components/browse/BrowseSortTabs";
 
 export const metadata: Metadata = {
-  title: "Browse Videos | VideoPlatform",
+  title: "Browse Videos | VideoHub",
   description: "Browse and discover videos across all categories",
 };
 

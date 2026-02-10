@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { getHomepageData } from "@/lib/queries/browse";
 import { VideoGrid } from "@/components/video/VideoGrid";
 import { SectionHeader } from "@/components/browse/SectionHeader";

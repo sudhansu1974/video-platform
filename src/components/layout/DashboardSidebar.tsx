@@ -108,7 +108,7 @@ export function DashboardSidebar({
       <div className="flex h-16 items-center justify-between border-b border-zinc-800 px-4">
         {!collapsed && (
           <Link href="/" className="text-lg font-bold text-zinc-50">
-            VideoPlatform
+            VideoHub
           </Link>
         )}
         {/* Desktop collapse toggle */}

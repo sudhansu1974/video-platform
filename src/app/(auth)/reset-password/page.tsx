@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { ResetPasswordForm } from "@/components/forms/ResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Reset Password — Video Platform",
+  title: "Reset Password — VideoHub",
 };
 
 export default function ResetPasswordPage() {

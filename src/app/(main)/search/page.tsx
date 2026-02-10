@@ -37,8 +37,8 @@ export async function generateMetadata({
 
   return {
     title: query
-      ? `Search results for "${query}" | VideoPlatform`
-      : "Search | VideoPlatform",
+      ? `Search results for "${query}" | VideoHub`
+      : "Search | VideoHub",
     robots: { index: false, follow: true },
   };
 }
