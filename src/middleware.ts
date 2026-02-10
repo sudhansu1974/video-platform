@@ -43,7 +43,7 @@ export default auth((req) => {
       (pathname.startsWith("/dashboard") || pathname === "/upload") &&
       !CREATOR_ROLES.includes(role)
     ) {
-      return NextResponse.redirect(new URL("/", nextUrl));
+      return NextResponse.redirect(new URL("/become-creator", nextUrl));
     }
   }
 

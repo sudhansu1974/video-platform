@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
+import { LayoutDashboard, Settings, LogOut, ChevronDown, Shield } from "lucide-react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { logout } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
@@ -73,6 +73,14 @@ export function UserMenu() {
             Dashboard
           </Link>
         </DropdownMenuItem>
+        {user.role === "ADMIN" && (
+          <DropdownMenuItem asChild>
+            <Link href="/admin" className="flex items-center gap-2">
+              <Shield className="h-4 w-4" />
+              Admin Panel
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem asChild>
           <Link href="/settings" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />

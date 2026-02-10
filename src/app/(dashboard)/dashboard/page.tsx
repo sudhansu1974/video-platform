@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Video, Globe, Loader, Eye, Upload, ExternalLink } from "lucide-react";
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import { getCreatorStats, getCreatorVideos, getRecentProcessingJobs } from "@/lib/queries/video";
 import { formatRelativeTime, formatViewCount } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -9,19 +10,36 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from "@/components/video/StatusBadge";
 import { VideoThumbnail } from "@/components/video/VideoThumbnail";
 import { Badge } from "@/components/ui/badge";
+import { ChannelSetupBanner } from "@/components/dashboard/ChannelSetupBanner";
 
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
 
-  const [stats, recentVideos, recentJobs] = await Promise.all([
+  const [stats, recentVideos, recentJobs, user] = await Promise.all([
     getCreatorStats(session.user.id),
     getCreatorVideos(session.user.id, { limit: 5 }),
     getRecentProcessingJobs(session.user.id, 5),
+    prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { role: true, avatarUrl: true, bannerUrl: true, bio: true },
+    }),
   ]);
+
+  const isChannelRole =
+    user?.role === "CREATOR" || user?.role === "STUDIO" || user?.role === "ADMIN";
 
   return (
     <div className="space-y-8">
+      {/* Channel Setup Banner */}
+      {isChannelRole && (
+        <ChannelSetupBanner
+          hasAvatar={!!user?.avatarUrl}
+          hasBanner={!!user?.bannerUrl}
+          hasBio={!!user?.bio}
+        />
+      )}
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatsCard

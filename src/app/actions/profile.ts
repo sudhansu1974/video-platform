@@ -49,6 +49,7 @@ export async function updateProfile(input: UpdateProfileInput) {
   });
 
   revalidatePath("/settings");
+  revalidatePath("/dashboard/channel");
   revalidatePath(`/channel/${session.user.username}`);
 
   return { success: true as const };
@@ -105,6 +106,7 @@ export async function updateAvatar(formData: FormData) {
   });
 
   revalidatePath("/settings");
+  revalidatePath("/dashboard/channel");
   revalidatePath(`/channel/${session.user.username}`);
 
   return { success: true as const, avatarUrl };
@@ -161,6 +163,7 @@ export async function updateBanner(formData: FormData) {
   });
 
   revalidatePath("/settings");
+  revalidatePath("/dashboard/channel");
   revalidatePath(`/channel/${session.user.username}`);
 
   return { success: true as const, bannerUrl };

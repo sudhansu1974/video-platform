@@ -2,10 +2,10 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Calendar, Globe, MapPin, Video, Eye, Upload } from "lucide-react";
+import { Calendar, Globe, MapPin, Video, Eye, Upload, Pencil } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RoleBadge } from "@/components/admin/RoleBadge";
 import { VideoGrid } from "@/components/video/VideoGrid";
 import { PaginationControls } from "@/components/browse/PaginationControls";
 import { ChannelSortTabs } from "@/components/channel/ChannelSortTabs";
@@ -14,6 +14,7 @@ import {
   getChannelVideos,
   getChannelCategories,
 } from "@/lib/queries/channel";
+import { auth } from "@/lib/auth";
 import { formatViewCount } from "@/lib/format";
 
 interface ChannelPageProps {
@@ -67,10 +68,14 @@ export default async function ChannelPage({
   const sort = (sp.sort as "recent" | "popular" | "oldest") || "recent";
   const categorySlug = sp.category;
 
-  const [{ videos, totalCount, totalPages }, categories] = await Promise.all([
-    getChannelVideos(channel.id, { page, limit: 12, sort, categorySlug }),
-    getChannelCategories(channel.id),
-  ]);
+  const [{ videos, totalCount, totalPages }, categories, session] =
+    await Promise.all([
+      getChannelVideos(channel.id, { page, limit: 12, sort, categorySlug }),
+      getChannelCategories(channel.id),
+      auth(),
+    ]);
+
+  const isOwner = session?.user?.id === channel.id;
 
   const initials = channel.name
     .split(" ")
@@ -119,11 +124,19 @@ export default async function ChannelPage({
                 </h1>
                 <p className="text-sm text-zinc-400">@{channel.username}</p>
               </div>
-              {channel.role !== "VIEWER" && (
-                <Badge variant="secondary" className="text-xs">
-                  {channel.role}
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                {channel.role !== "VIEWER" && (
+                  <RoleBadge role={channel.role} />
+                )}
+                {isOwner && (
+                  <Button asChild variant="outline" size="sm" className="gap-1.5">
+                    <Link href="/dashboard/channel">
+                      <Pencil className="h-3.5 w-3.5" />
+                      Edit Channel
+                    </Link>
+                  </Button>
+                )}
+              </div>
             </div>
 
             {/* Stats */}

@@ -4,29 +4,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  Users,
   Video,
-  Upload,
-  BarChart3,
-  Settings,
-  Tv,
-  Shield,
+  FolderTree,
+  Tags,
+  Cpu,
+  ArrowLeft,
+  LayoutGrid,
   PanelLeftClose,
   PanelLeftOpen,
   X,
+  Shield,
 } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
-interface DashboardSidebarProps {
+interface AdminSidebarProps {
   user: {
     name?: string | null;
     username?: string;
-    email?: string | null;
     avatarUrl?: string | null;
-    role?: string;
   };
   collapsed: boolean;
   onToggle: () => void;
@@ -34,59 +33,33 @@ interface DashboardSidebarProps {
   onMobileClose: () => void;
 }
 
-function getNavItems(role?: string) {
-  const isChannelRole = role === "CREATOR" || role === "STUDIO" || role === "ADMIN";
+const navItems = [
+  {
+    label: "Overview",
+    href: "/admin",
+    icon: LayoutDashboard,
+    exact: true,
+  },
+  { label: "Users", href: "/admin/users", icon: Users },
+  { label: "Videos", href: "/admin/videos", icon: Video },
+  { label: "Categories", href: "/admin/categories", icon: FolderTree },
+  { label: "Tags", href: "/admin/tags", icon: Tags },
+  { label: "Processing", href: "/admin/processing", icon: Cpu },
+];
 
-  return [
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-      icon: LayoutDashboard,
-      exact: true,
-    },
-    {
-      label: "My Videos",
-      href: "/dashboard/videos",
-      icon: Video,
-    },
-    {
-      label: "Upload",
-      href: "/upload",
-      icon: Upload,
-    },
-    ...(isChannelRole
-      ? [
-          {
-            label: "Channel",
-            href: "/dashboard/channel",
-            icon: Tv,
-          },
-        ]
-      : []),
-    {
-      label: "Analytics",
-      href: "/dashboard/analytics",
-      icon: BarChart3,
-      disabled: true,
-      badge: "Soon",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-      icon: Settings,
-    },
-  ];
-}
+const bottomItems = [
+  { label: "Back to Site", href: "/", icon: ArrowLeft },
+  { label: "Dashboard", href: "/dashboard", icon: LayoutGrid },
+];
 
-export function DashboardSidebar({
+export function AdminSidebar({
   user,
   collapsed,
   onToggle,
   mobileOpen,
   onMobileClose,
-}: DashboardSidebarProps) {
+}: AdminSidebarProps) {
   const pathname = usePathname();
-  const navItems = getNavItems(user.role);
 
   const initials = user.name
     ? user.name
@@ -95,7 +68,7 @@ export function DashboardSidebar({
         .join("")
         .toUpperCase()
         .slice(0, 2)
-    : "U";
+    : "A";
 
   const isActive = (href: string, exact?: boolean) => {
     if (exact) return pathname === href;
@@ -107,11 +80,12 @@ export function DashboardSidebar({
       {/* Header */}
       <div className="flex h-16 items-center justify-between border-b border-zinc-800 px-4">
         {!collapsed && (
-          <Link href="/" className="text-lg font-bold text-zinc-50">
-            VideoPlatform
-          </Link>
+          <div className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-red-400" />
+            <span className="text-lg font-bold text-zinc-50">Admin</span>
+          </div>
         )}
-        {/* Desktop collapse toggle */}
+        {collapsed && <Shield className="mx-auto h-5 w-5 text-red-400" />}
         <Button
           variant="ghost"
           size="icon"
@@ -124,7 +98,6 @@ export function DashboardSidebar({
             <PanelLeftClose className="h-5 w-5" />
           )}
         </Button>
-        {/* Mobile close button */}
         <Button
           variant="ghost"
           size="icon"
@@ -139,60 +112,43 @@ export function DashboardSidebar({
       <nav className="flex-1 space-y-1 p-3">
         {navItems.map((item) => {
           const active = isActive(item.href, item.exact);
-
           return (
             <Link
               key={item.href}
-              href={item.disabled ? "#" : item.href}
-              onClick={item.disabled ? (e) => e.preventDefault() : onMobileClose}
+              href={item.href}
+              onClick={onMobileClose}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 active
                   ? "border-l-2 border-blue-500 bg-blue-500/10 text-blue-400"
-                  : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-50",
-                item.disabled && "cursor-not-allowed opacity-50"
+                  : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-50"
               )}
               title={collapsed ? item.label : undefined}
             >
               <item.icon className="h-5 w-5 shrink-0" />
-              {!collapsed && (
-                <>
-                  <span className="flex-1">{item.label}</span>
-                  {item.badge && (
-                    <Badge variant="secondary" className="bg-zinc-700 text-xs text-zinc-400">
-                      {item.badge}
-                    </Badge>
-                  )}
-                </>
-              )}
+              {!collapsed && <span className="flex-1">{item.label}</span>}
             </Link>
           );
         })}
 
-        {/* Admin link — only for ADMIN users */}
-        {user.role === "ADMIN" && (
-          <>
-            {!collapsed && <Separator className="my-2 bg-zinc-800" />}
-            {collapsed && <div className="my-2" />}
-            <Link
-              href="/admin"
-              onClick={onMobileClose}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                pathname.startsWith("/admin")
-                  ? "border-l-2 border-red-500 bg-red-500/10 text-red-400"
-                  : "text-red-400/70 hover:bg-zinc-800 hover:text-red-400"
-              )}
-              title={collapsed ? "Admin Panel" : undefined}
-            >
-              <Shield className="h-5 w-5 shrink-0" />
-              {!collapsed && <span className="flex-1">Admin Panel</span>}
-            </Link>
-          </>
-        )}
+        {!collapsed && <Separator className="my-3 bg-zinc-800" />}
+        {collapsed && <div className="my-3" />}
+
+        {bottomItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={onMobileClose}
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-50"
+            title={collapsed ? item.label : undefined}
+          >
+            <item.icon className="h-5 w-5 shrink-0" />
+            {!collapsed && <span className="flex-1">{item.label}</span>}
+          </Link>
+        ))}
       </nav>
 
-      {/* User info at bottom */}
+      {/* User info */}
       <div className="border-t border-zinc-800 p-3">
         <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
           <Avatar className="h-8 w-8 shrink-0">
@@ -206,9 +162,7 @@ export function DashboardSidebar({
               <p className="truncate text-sm font-medium text-zinc-200">
                 {user.name}
               </p>
-              <p className="truncate text-xs text-zinc-500">
-                {user.role}
-              </p>
+              <p className="truncate text-xs text-red-400">Admin</p>
             </div>
           )}
         </div>
@@ -218,15 +172,12 @@ export function DashboardSidebar({
 
   return (
     <>
-      {/* Mobile overlay */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/60 lg:hidden"
           onClick={onMobileClose}
         />
       )}
-
-      {/* Mobile sidebar */}
       <aside
         className={cn(
           "fixed inset-y-0 left-0 z-50 w-[260px] bg-zinc-900 transition-transform duration-200 lg:hidden",
@@ -235,8 +186,6 @@ export function DashboardSidebar({
       >
         {sidebarContent}
       </aside>
-
-      {/* Desktop sidebar */}
       <aside
         className={cn(
           "hidden lg:flex lg:flex-col lg:border-r lg:border-zinc-800 lg:bg-zinc-900",

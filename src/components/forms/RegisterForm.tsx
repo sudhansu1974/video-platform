@@ -156,11 +156,20 @@ export function RegisterForm() {
           </Button>
         </form>
       </CardContent>
-      <CardFooter className="justify-center">
+      <CardFooter className="flex-col gap-2">
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link href="/login" className="text-foreground hover:underline">
             Sign in
+          </Link>
+        </p>
+        <p className="text-xs text-zinc-500">
+          Creating a viewer account. Want to upload videos?{" "}
+          <Link
+            href="/become-creator"
+            className="text-blue-400 hover:underline"
+          >
+            Learn about creator accounts
           </Link>
         </p>
       </CardFooter>
