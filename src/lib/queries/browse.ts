@@ -208,3 +208,20 @@ export async function getTrendingTags(limit: number = 10) {
     take: limit,
   });
 }
+
+// ─── Simple Videos (Test Site) ───────────────────────
+
+export async function getSimpleVideos(limit: number = 4) {
+  const videos = await prisma.video.findMany({
+    where: { status: "PUBLISHED" },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      thumbnailUrl: true,
+    },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+  });
+  return videos;
+}

@@ -8,13 +8,13 @@ const isWindows = process.platform === "win32";
 const FFMPEG_PATH =
   process.env.FFMPEG_PATH ||
   (isWindows
-    ? "C:\\Users\\sudha\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.exe"
+    ? "D:\\ffmpeg\\bin\\ffmpeg.exe"
     : "/usr/bin/ffmpeg");
 
 const FFPROBE_PATH =
   process.env.FFPROBE_PATH ||
   (isWindows
-    ? "C:\\Users\\sudha\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.exe"
+    ? "D:\\ffmpeg\\bin\\ffprobe.exe"
     : "/usr/bin/ffprobe");
 
 let configured = false;
