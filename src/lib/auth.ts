@@ -9,6 +9,7 @@ import type { Adapter } from "next-auth/adapters";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  trustHost: true,
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     Credentials({
@@ -20,7 +21,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const parsed = loginSchema.safeParse(credentials);
         if (!parsed.success) return null;
 
-        const { email, password } = parsed.data;
+        const { email, password: rawPassword } = parsed.data;
+
+        // Auth.js v5 beta escapes special characters (e.g. ! -> \!) in
+        // credential values. Strip backslash escaping so bcrypt comparison
+        // works against the original password hash.
+        const password = rawPassword.replace(/\\(.)/g, "$1");
 
         const user = await prisma.user.findUnique({
           where: { email },

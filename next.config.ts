@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["fluent-ffmpeg"],
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "2gb",
+    },
+  },
   async headers() {
     return [
       {
